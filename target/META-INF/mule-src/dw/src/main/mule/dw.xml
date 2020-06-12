@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e5a4f896-ee11-4248-b9cd-464b66f5098a" >
+		<http:listener-connection host="0.0.0.0" port="${http.port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="a501489b-c6a6-42bc-b969-c890e9da0f04" file="lcl.properties" />
+	<flow name="dwFlow" doc:id="a493a450-ba8f-4806-9dba-1b08a16b0a9f" >
+		<http:listener doc:name="Listener" doc:id="f47a81f2-b741-4075-99f4-44cc58f0e1ff" config-ref="HTTP_Listener_config" path="/dw"/>
+		<ee:transform doc:name="Transform Message" doc:id="d00a7d39-4227-40f5-bf16-c28d743e9500" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+import * from modules::commonFunc
+//fun toUpper(aString) = upper(aString)
+//fun toPhoneFormat(str: String) = "(" ++ str[0 to 2] ++ ")" ++ str[3 to 5] ++ "-" ++ str[6 to 9]
+---
+//toUpper('hello'),
+//toPhoneFormat("8589996443")
+
+{
+	Name : concatName(payload),
+	createdDate : stringToDateUTC(payload.createdDate)
+}
+	
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
