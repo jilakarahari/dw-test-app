@@ -27,16 +27,19 @@
 				<configuration>
 					
 				<cloudHubDeployment>
-				      
-				      <username>adhya060417</username>
-				      <password>Jhk221988</password>
-				      <applicationName>dw</applicationName>
-				      <environment>sandbox</environment>
+				      <server>${server}</server>
+				      <workers>${workers}</workers>
+				      <workerType>${workerType}</workerType>
+				      <applicationName>${applicationName}</applicationName>
+				      <environment>${environment}</environment>
+				      <muleVersion>${muleVersion}</muleVersion>
+				      <objectStoreV2>true</objectStoreV2>
 <!-- 				      <properties> -->
 <!-- 				        <key>value</key> -->
 <!-- 				      </properties> -->
 				  </cloudHubDeployment>
-				</configuration>
+				<classifier>mule-application</classifier>
+                </configuration>
 			</plugin>
 		</plugins>
 	</build>

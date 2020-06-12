@@ -31,5 +31,6 @@ import * from modules::commonFunc
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="554523b8-1143-4e53-bed0-af12e7b9c243" />
 	</flow>
 </mule>
